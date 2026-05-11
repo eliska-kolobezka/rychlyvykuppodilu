@@ -935,6 +935,35 @@
     </div>
   </div>
 
+  <!-- STEP 10 – phone -->
+  <div class="step-card" id="step10">
+    <div class="step-tag">Krok 10 / 10</div>
+    <h2 class="step-q">Na jaké číslo vám máme zavolat?</h2>
+    <p class="step-hint">Zavoláme vám do 24 hodin s konkrétní nabídkou. Žádné závazky.</p>
+    <div class="f-group">
+      <label for="phone">Telefonní číslo</label>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-weight:700;color:var(--navy);white-space:nowrap;font-size:15px;">+420</span>
+        <input type="tel" id="phone" placeholder="777 123 456"
+               oninput="chkPhone()" autocomplete="tel" style="flex:1;" />
+      </div>
+    </div>
+    <div class="sf">
+      <button class="btn-back" onclick="goTo(9)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Zpět</button>
+      <button class="btn-next" id="nx10" onclick="submitAndLoad()" disabled>
+        Odeslat
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loadingScreen" style="display:none;align-items:center;justify-content:center;min-height:340px;flex-direction:column;gap:20px;padding:40px 20px;text-align:center;">
+    <div style="width:52px;height:52px;border:4px solid #e5f7ee;border-top-color:var(--green);border-radius:50%;animation:spin 0.8s linear infinite;"></div>
+    <p style="font-size:16px;font-weight:600;color:var(--navy);">Vyhodnocujeme váš podíl…</p>
+    <p style="font-size:13px;color:#6b7280;">Chvilku strpení, hned se vám ohlásíme.</p>
+  </div>
+
   <!-- RESULT -->
   <div class="step-card" id="stepResult">
     <div class="result-hero">
