@@ -1061,12 +1061,12 @@
       const d = await r.json();
       const list = document.getElementById('addrList');
       if (!d.length) { list.style.display = 'none'; return; }
-      list.innerHTML = d.map(i => {
+      window._addrResults = d.map(i => i.display_name);
+      list.innerHTML = d.map((i, idx) => {
         const parts = i.display_name.split(',');
         const main = parts[0].trim();
         const rest = parts.slice(1, 3).join(', ').trim();
-        const safe = i.display_name.replace(/\/g,'\\').replace(/'/g,"\'");
-        return '<div class="addr-opt" onclick="pickAddr('' + safe + '')">'
+        return '<div class="addr-opt" onclick="pickAddr(window._addrResults[' + idx + '])">'
              + '<strong>' + main + '</strong>'
              + (rest ? ', ' + rest : '') + '</div>';
       }).join('');
