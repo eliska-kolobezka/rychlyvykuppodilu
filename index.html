@@ -538,6 +538,58 @@
     .step0-logo { height: 56px; }
     footer { padding: 20px; }
   }
+
+  /* icons */
+  .t-icon { color: var(--green-dk); }
+  .t-icon svg, .m-icon svg { display: block; }
+  .m-icon { color: var(--green-dk); }
+  .phone-flag { font-size: 13px; font-weight: 700; color: var(--gray-txt); left: 14px; }
+
+  /* address autocomplete */
+  .addr-wrap { position: relative; }
+  .addr-dropdown {
+    position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+    background: var(--white); border: 1.5px solid var(--gray-mid);
+    border-radius: var(--radius-md); box-shadow: var(--shadow-lg);
+    z-index: 200; max-height: 220px; overflow-y: auto; display: none;
+  }
+  .addr-opt {
+    padding: 11px 16px; font-size: 14px; color: var(--navy);
+    cursor: pointer; border-bottom: 1px solid var(--gray-lt); transition: background .1s;
+  }
+  .addr-opt:last-child { border-bottom: none; }
+  .addr-opt:hover { background: var(--green-lt); }
+  .addr-opt strong { color: var(--green-dk); }
+
+  /* loading screen */
+  .loading-wrap {
+    display: none; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center;
+  }
+  .loading-card {
+    background: var(--white); border-radius: var(--radius-xl);
+    padding: 56px 40px; box-shadow: var(--shadow); width: 100%;
+    animation: slideUp 0.35s cubic-bezier(.4,0,.2,1);
+  }
+  .spinner {
+    width: 54px; height: 54px; border: 4px solid var(--gray-mid);
+    border-top-color: var(--green); border-radius: 50%;
+    animation: spin 0.85s linear infinite; margin: 0 auto 24px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-title { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+  .loading-sub { font-size: 14px; color: var(--gray-txt); margin-bottom: 28px; }
+  .loading-items { display: flex; flex-direction: column; gap: 10px; text-align: left; display: inline-flex; }
+  .li-row {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--gray-txt); font-weight: 500;
+  }
+  .li-dot {
+    width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--green);
+    border-top-color: transparent; flex-shrink: 0;
+    animation: spin 0.85s linear infinite;
+  }
+
 </style>
 </head>
 <body>
@@ -614,22 +666,22 @@
 
   <!-- 1: Typ -->
   <div class="step-card active" id="step1">
-    <div class="step-tag">Krok 1 / 9</div>
+    <div class="step-tag">Krok 1 / 10</div>
     <h2 class="step-q">O jakou nemovitost se jedná?</h2>
     <p class="step-hint">Vyberte typ nemovitosti, na níž vlastníte podíl.</p>
     <div class="tile-grid c3" id="q1">
       <div class="tile" data-v="byt" onclick="pick('q1',this,2)">
-        <div class="t-icon">🏢</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="4" y="2" width="16" height="20" rx="1"/><line x1="9" y1="2" x2="9" y2="22"/><line x1="15" y1="2" x2="15" y2="22"/><line x1="4" y1="9" x2="9" y2="9"/><line x1="15" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="9" y2="15"/><line x1="15" y1="15" x2="20" y2="15"/></svg></div>
         <div class="t-body"><div class="t-lbl">Byt</div><div class="t-sub">Bytová jednotka</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="dum" onclick="pick('q1',this,2)">
-        <div class="t-icon">🏠</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
         <div class="t-body"><div class="t-lbl">Dům</div><div class="t-sub">Rodinný / bytový</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="pozemek" onclick="pick('q1',this,2)">
-        <div class="t-icon">🌿</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-5h6v5"/></svg></div>
         <div class="t-body"><div class="t-lbl">Pozemek</div><div class="t-sub">Stavební / jiný</div></div>
         <div class="t-radio"></div>
       </div>
@@ -642,32 +694,32 @@
 
   <!-- 2: Podíl -->
   <div class="step-card" id="step2">
-    <div class="step-tag">Krok 2 / 9</div>
+    <div class="step-tag">Krok 2 / 10</div>
     <h2 class="step-q">Jak velký podíl vlastníte?</h2>
     <p class="step-hint">Vyberte přibližnou velikost vašeho spoluvlastnického podílu.</p>
     <div class="tile-grid c1" id="q2">
       <div class="tile" data-v="do_ctvrtiny" onclick="pick('q2',this,3)">
-        <div class="t-icon">⬜</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="9"/><path d="M12 12L12 3A9 9 0 0 1 19.4 7.5z" fill="currentColor" opacity=".35" stroke="none"/></svg></div>
         <div class="t-body"><div class="t-lbl">Do 1/4</div><div class="t-sub">Méně než 25 % — menšinový podíl</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="ctvrtina" onclick="pick('q2',this,3)">
-        <div class="t-icon">🔲</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="9"/><path d="M12 12L12 3A9 9 0 0 1 21 12z" fill="currentColor" opacity=".45" stroke="none"/></svg></div>
         <div class="t-body"><div class="t-lbl">Přesně 1/4</div><div class="t-sub">Přibližně 25 %</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="tretina" onclick="pick('q2',this,3)">
-        <div class="t-icon">◼️</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="9"/><path d="M12 12L12 3A9 9 0 0 1 20.2 16.5z" fill="currentColor" opacity=".45" stroke="none"/></svg></div>
         <div class="t-body"><div class="t-lbl">Přibližně 1/3</div><div class="t-sub">Přibližně 33 %</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="polovina" onclick="pick('q2',this,3)">
-        <div class="t-icon">⬛</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="9"/><path d="M12 12L12 3A9 9 0 0 1 12 21z" fill="currentColor" opacity=".45" stroke="none"/></svg></div>
         <div class="t-body"><div class="t-lbl">Přesně 1/2</div><div class="t-sub">50 % — rovnocenné spoluvlastnictví</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="vice_nez_polovina" onclick="pick('q2',this,3)">
-        <div class="t-icon">🟪</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="9"/><path d="M12 12L12 3A9 9 0 0 0 3 12z" fill="currentColor" opacity=".2" stroke="none"/><path d="M12 12L12 3A9 9 0 0 1 12 21z" fill="currentColor" opacity=".5" stroke="none"/></svg></div>
         <div class="t-body"><div class="t-lbl">Více než 1/2</div><div class="t-sub">Nadpoloviční většina — 51 % a výše</div></div>
         <div class="t-radio"></div>
       </div>
@@ -680,37 +732,37 @@
 
   <!-- 3: Rozloha -->
   <div class="step-card" id="step3">
-    <div class="step-tag">Krok 3 / 9</div>
+    <div class="step-tag">Krok 3 / 10</div>
     <h2 class="step-q">Jak velká je nemovitost?</h2>
     <p class="step-hint">Přibližná podlahová plocha nebo rozloha — jeden z klíčových faktorů ceny.</p>
     <div class="tile-grid c2" id="q3">
       <div class="tile" data-v="do40" onclick="pick('q3',this,4)">
-        <div class="t-icon">📦</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M3 21h18M21 3H3"/></svg></div>
         <div class="t-body"><div class="t-lbl">Do 40 m²</div><div class="t-sub">Studio nebo malý byt</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="40_70" onclick="pick('q3',this,4)">
-        <div class="t-icon">🏠</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
         <div class="t-body"><div class="t-lbl">40 – 70 m²</div><div class="t-sub">Menší byt nebo řadovka</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="70_120" onclick="pick('q3',this,4)">
-        <div class="t-icon">🏡</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 21h18"/></svg></div>
         <div class="t-body"><div class="t-lbl">70 – 120 m²</div><div class="t-sub">Větší byt nebo menší dům</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="120_250" onclick="pick('q3',this,4)">
-        <div class="t-icon">🏘️</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M2 20h20"/><path d="M4 20V9l8-6 8 6v11"/></svg></div>
         <div class="t-body"><div class="t-lbl">120 – 250 m²</div><div class="t-sub">Rodinný dům nebo vila</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="nad250" onclick="pick('q3',this,4)">
-        <div class="t-icon">🏗️</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M2 20h20"/><path d="M4 20V9l8-6 8 6v11"/><line x1="9" y1="20" x2="9" y2="13"/><line x1="15" y1="20" x2="15" y2="13"/></svg></div>
         <div class="t-body"><div class="t-lbl">Nad 250 m²</div><div class="t-sub">Velký objekt nebo pozemek</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="nevim" onclick="pick('q3',this,4)">
-        <div class="t-icon">🤷</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
         <div class="t-body"><div class="t-lbl">Nevím přesně</div><div class="t-sub">Upřesníme při konzultaci</div></div>
         <div class="t-radio"></div>
       </div>
@@ -723,7 +775,7 @@
 
   <!-- 4: Příslušenství -->
   <div class="step-card" id="step4">
-    <div class="step-tag">Krok 4 / 9</div>
+    <div class="step-tag">Krok 4 / 10</div>
     <h2 class="step-q">Co k nemovitosti náleží?</h2>
     <p class="step-hint">Příslušenství zvyšuje hodnotu — zaškrtněte vše, co platí.</p>
     <div class="multi-note">
@@ -731,14 +783,14 @@
       Vyberte libovolný počet — nebo pokračujte bez výběru
     </div>
     <div class="multi-grid" id="q4">
-      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon">🪟</div><span class="cb-text">Balkon</span></label>
-      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon">🌇</div><span class="cb-text">Lodžie</span></label>
-      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon">🌿</div><span class="cb-text">Terasa / zahrada</span></label>
-      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon">🗄️</div><span class="cb-text">Sklep / kóje</span></label>
-      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon">🚗</div><span class="cb-text">Garáž</span></label>
-      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon">🅿️</div><span class="cb-text">Parkovací místo</span></label>
-      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon">🏚️</div><span class="cb-text">Půda / kumbál</span></label>
-      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon">🛗</div><span class="cb-text">Výtah v budově</span></label>
+      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="3" y="3" width="18" height="12" rx="1"/><path d="M3 19h18"/><line x1="7" y1="15" x2="7" y2="19"/><line x1="12" y1="15" x2="12" y2="19"/><line x1="17" y1="15" x2="17" y2="19"/></svg></div><span class="cb-text">Balkon</span></label>
+      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M4 20V11h16v9"/><path d="M2 11h20"/><path d="M8 11V5h8v6"/></svg></div><span class="cb-text">Lodžie</span></label>
+      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-5h6v5"/></svg></div><span class="cb-text">Terasa / zahrada</span></label>
+      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M3 9h18v12H3z"/><path d="M3 9l9-6 9 6"/><line x1="12" y1="9" x2="12" y2="21"/></svg></div><span class="cb-text">Sklep / kóje</span></label>
+      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M2 17h20"/><path d="M4 17V9l8-5 8 5v8"/><path d="M10 17v-5h4v5"/></svg></div><span class="cb-text">Garáž</span></label>
+      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V7h4a3 3 0 010 6H9"/></svg></div><span class="cb-text">Parkovací místo</span></label>
+      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M2 12L12 2l10 10"/><path d="M4 12v9h16v-9"/></svg></div><span class="cb-text">Půda / kumbál</span></label>
+      <label class="cb-label"><input type="checkbox" onchange="tog('q4')"><div class="cb-box"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 6 11 12 3"/></svg></div><div class="cb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 8l3-3 3 3"/><path d="M9 16l3 3 3-3"/></svg></div><span class="cb-text">Výtah v budově</span></label>
     </div>
     <div class="sf">
       <button class="btn-back" onclick="goTo(3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Zpět</button>
@@ -748,22 +800,22 @@
 
   <!-- 5: Stav -->
   <div class="step-card" id="step5">
-    <div class="step-tag">Krok 5 / 9</div>
+    <div class="step-tag">Krok 5 / 10</div>
     <h2 class="step-q">V jakém stavu nemovitost je?</h2>
     <p class="step-hint">Technický stav je jedním z klíčových faktorů výsledné ceny.</p>
     <div class="tile-grid c1" id="q5">
       <div class="tile" data-v="po_rekonstrukci" onclick="pick('q5',this,6)">
-        <div class="t-icon">✨</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <div class="t-body"><div class="t-lbl">Po rekonstrukci (do 3 let)</div><div class="t-sub">Nová kuchyň, koupelna nebo kompletní renovace</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="obyvatelne" onclick="pick('q5',this,6)">
-        <div class="t-icon">🏡</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 21h18"/></svg></div>
         <div class="t-body"><div class="t-lbl">Bez rekonstrukce, ale obyvatelné</div><div class="t-sub">Funkční stav, starší vybavení</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="spatny_stav" onclick="pick('q5',this,6)">
-        <div class="t-icon">🔧</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
         <div class="t-body"><div class="t-lbl">Špatný stav — potřebuje rekonstrukci</div><div class="t-sub">Výraznější investice nevyhnutelná</div></div>
         <div class="t-radio"></div>
       </div>
@@ -776,22 +828,22 @@
 
   <!-- 6: Obsazenost -->
   <div class="step-card" id="step6">
-    <div class="step-tag">Krok 6 / 9</div>
+    <div class="step-tag">Krok 6 / 10</div>
     <h2 class="step-q">Kdo v nemovitosti aktuálně bydlí?</h2>
     <p class="step-hint">Obsazenost ovlivňuje způsob a rychlost řešení.</p>
     <div class="tile-grid c1" id="q6">
       <div class="tile" data-v="ja" onclick="pick('q6',this,7)">
-        <div class="t-icon">👤</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
         <div class="t-body"><div class="t-lbl">Já sám / sama</div><div class="t-sub">Nemovitost užívám k vlastnímu bydlení</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="najemnik" onclick="pick('q6',this,7)">
-        <div class="t-icon">👥</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
         <div class="t-body"><div class="t-lbl">Někdo jiný</div><div class="t-sub">Nájemník nebo jiný člen rodiny</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="nikdo" onclick="pick('q6',this,7)">
-        <div class="t-icon">🚪</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M3 4a2 2 0 012-2h14a2 2 0 012 2v16H3V4z"/><path d="M10 10v5"/><path d="M7 10v5"/></svg></div>
         <div class="t-body"><div class="t-lbl">Nikdo — nemovitost je prázdná</div><div class="t-sub">Neobydlená nebo nevyužívaná</div></div>
         <div class="t-radio"></div>
       </div>
@@ -804,17 +856,17 @@
 
   <!-- 7: Rychlost -->
   <div class="step-card" id="step7">
-    <div class="step-tag">Krok 7 / 9</div>
+    <div class="step-tag">Krok 7 / 10</div>
     <h2 class="step-q">Jak rychle chcete situaci řešit?</h2>
     <p class="step-hint">Pomůže nám připravit tu nejlepší nabídku přímo pro vás.</p>
     <div class="tile-grid c2" id="q7">
       <div class="tile" data-v="rychle" onclick="pick('q7',this,8)">
-        <div class="t-icon">⚡</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
         <div class="t-body"><div class="t-lbl">Co nejdříve</div><div class="t-sub">Ideálně do 3 měsíců</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="bez_spěchu" onclick="pick('q7',this,8)">
-        <div class="t-icon">🕐</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         <div class="t-body"><div class="t-lbl">Mám čas</div><div class="t-sub">Spěch není podmínkou</div></div>
         <div class="t-radio"></div>
       </div>
@@ -827,32 +879,32 @@
 
   <!-- 8: Zatížení -->
   <div class="step-card" id="step8">
-    <div class="step-tag">Krok 8 / 9</div>
+    <div class="step-tag">Krok 8 / 10</div>
     <h2 class="step-q">Je na nemovitosti hypotéka nebo exekuce?</h2>
     <p class="step-hint">Tyto informace jsou důvěrné a slouží výhradně pro přípravu nabídky. Zvládáme i komplikované situace.</p>
     <div class="tile-grid c1" id="q8">
       <div class="tile" data-v="nic" onclick="pick('q8',this,9)">
-        <div class="t-icon">✅</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <div class="t-body"><div class="t-lbl">Nic z toho — nemovitost je čistá</div><div class="t-sub">Bez hypotéky ani jiných závazků</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="hypoteka" onclick="pick('q8',this,9)">
-        <div class="t-icon">🏦</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></div>
         <div class="t-body"><div class="t-lbl">Je na ní hypotéka</div><div class="t-sub">Zástavní právo banky — standardní situace, zvládneme</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="exekuce" onclick="pick('q8',this,9)">
-        <div class="t-icon">⚖️</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
         <div class="t-body"><div class="t-lbl">Je na ní exekuce</div><div class="t-sub">Nebo jiné právní zatížení — pomůžeme to vyřešit</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="oboji" onclick="pick('q8',this,9)">
-        <div class="t-icon">📋</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
         <div class="t-body"><div class="t-lbl">Obojí — hypotéka i exekuce</div><div class="t-sub">Složitější situace, se kterou máme zkušenosti</div></div>
         <div class="t-radio"></div>
       </div>
       <div class="tile" data-v="nevim" onclick="pick('q8',this,9)">
-        <div class="t-icon">🤷</div>
+        <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
         <div class="t-body"><div class="t-lbl">Nevím — nejsem si jistý/á</div><div class="t-sub">Prověříme to společně</div></div>
         <div class="t-radio"></div>
       </div>
@@ -865,17 +917,19 @@
 
   <!-- 9: Adresa -->
   <div class="step-card" id="step9">
-    <div class="step-tag">Krok 9 / 9</div>
+    <div class="step-tag">Krok 9 / 10</div>
     <h2 class="step-q">Kde se nemovitost nachází?</h2>
     <p class="step-hint">Lokalita je nejdůležitější faktor při oceňování. Stačí město nebo orientační adresa.</p>
-    <div class="f-group">
+    <div class="f-group addr-wrap">
       <label for="address">Adresa nebo město</label>
-      <input type="text" id="address" placeholder="např. Mánesova 12, Praha 2 — nebo jen Praha" oninput="chkAddr()" />
+      <input type="text" id="address" placeholder="např. Mánesova 12, Praha 2 — nebo jen Praha"
+             oninput="handleAddrInput()" autocomplete="off" />
+      <div id="addrList" class="addr-dropdown"></div>
     </div>
     <div class="sf">
       <button class="btn-back" onclick="goTo(8)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Zpět</button>
-      <button class="btn-next" id="nx9" onclick="showResult()" disabled>
-        Zobrazit výsledek
+      <button class="btn-next" id="nx9" onclick="goTo(10)" disabled>
+        Další
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
     </div>
@@ -888,8 +942,8 @@
         <div class="result-check">
           <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <h2>Váš podíl je <em>obchodovatelný.</em><br>Hodnocení připraveno.</h2>
-        <p>Na základě vašich odpovědí jsme vyhodnotili, že váš podíl má reálný prodejní potenciál. Specialista vám zavolá s konkrétní nabídkou — zcela zdarma a bez závazků.</p>
+        <h2>O váš podíl<br><em>máme zájem.</em></h2>
+        <p>Vaše odpovědi jsme přijali. Brzy vás bude kontaktovat náš specialista s konkrétní nabídkou. Těšte se na hovor do 24 hodin.</p>
         <div class="result-perks">
           <div class="result-perk"><div class="rp-dot"></div>Bezplatné ocenění podílu zkušeným specialistou</div>
           <div class="result-perk"><div class="rp-dot"></div>Konkrétní číselná nabídka — žádné obecné odhady</div>
@@ -899,21 +953,6 @@
     </div>
 
     <div class="chips-row" id="resultChips"></div>
-
-    <div class="phone-section-lbl">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.8 12a19.79 19.79 0 01-3.07-8.67A2 2 0 013.7 1.13h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.91 8.7a16 16 0 006.29 6.29l1-1.01a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-      Zadejte číslo — zavoláme s výsledkem
-    </div>
-    <div class="phone-wrap">
-      <span class="phone-flag">🇨🇿</span>
-      <input type="tel" id="phone" placeholder="+420 777 123 456" />
-    </div>
-
-    <button class="btn-submit" onclick="submitForm()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.8 12a19.79 19.79 0 01-3.07-8.67A2 2 0 013.7 1.13h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.91 8.7a16 16 0 006.29 6.29l1-1.01a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-      Ocenit podíl — zavolejte mi
-    </button>
-    <p class="form-note">Žádné závazky · konzultace zcela zdarma · vaše údaje jsou v bezpečí</p>
 
     <div class="trust-row">
       <div class="trust-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Bez závazků</div>
@@ -944,13 +983,24 @@
 </footer>
 
 <script>
-  const STEPS = 9;
+  const STEPS = 10;
   const ans = {};
+
+  const CL = {
+    q1: { byt:'Byt', dum:'Dům', pozemek:'Pozemek' },
+    q2: { do_ctvrtiny:'Do 1/4', ctvrtina:'1/4', tretina:'1/3', polovina:'1/2', vice_nez_polovina:'Více než 1/2' },
+    q3: { do40:'Do 40 m²', '40_70':'40–70 m²', '70_120':'70–120 m²', '120_250':'120–250 m²', nad250:'Nad 250 m²', nevim:'Rozloha neznámá' },
+    q5: { po_rekonstrukci:'Po rekonstrukci', obyvatelne:'Obyvatelný', spatny_stav:'Nutná oprava' },
+    q6: { ja:'Bydlím já', najemnik:'Nájemník', nikdo:'Prázdné' },
+    q7: { rychle:'Chci rychle', 'bez_spěchu':'Mám čas' },
+    q8: { nic:'Čistá', hypoteka:'Hypotéka', exekuce:'Exekuce', oboji:'Obojí', nevim:'Nevím' },
+  };
 
   function backToIntro(e) {
     e.preventDefault();
     document.querySelectorAll('.step-card').forEach(el => el.classList.remove('active'));
-    document.getElementById('thankyou').classList.remove('show');
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('loadingScreen').style.flexDirection = '';
     document.getElementById('progressWrap').style.display = 'none';
     document.getElementById('step0').style.display = '';
   }
@@ -961,20 +1011,11 @@
     goTo(1);
   }
 
-  // Chip labels for result summary
-  const CL = {
-    q1: { byt:'🏢 Byt', dum:'🏠 Dům', pozemek:'🌿 Pozemek' },
-    q2: { do_ctvrtiny:'⬜ Do 1/4', ctvrtina:'🔲 1/4', tretina:'◼️ 1/3', polovina:'⬛ 1/2', vice_nez_polovina:'🟪 Více než 1/2' },
-    q3: { do40:'📦 Do 40 m²', '40_70':'🏠 40–70 m²', '70_120':'🏡 70–120 m²', '120_250':'🏘️ 120–250 m²', nad250:'🏗️ Nad 250 m²', nevim:'🤷 Rozloha neznámá' },
-    q5: { po_rekonstrukci:'✨ Po rekonstrukci', obyvatelne:'🏡 Obyvatelný', spatny_stav:'🔧 Nutná oprava' },
-    q6: { ja:'👤 Bydlím já', najemnik:'👥 Nájemník', nikdo:'🚪 Prázdné' },
-    q7: { rychle:'⚡ Chci rychle', bez_spěchu:'🕐 Mám čas' },
-    q8: { nic:'✅ Čistá', hypoteka:'🏦 Hypotéka', exekuce:'⚖️ Exekuce', oboji:'📋 Obojí', nevim:'🤷 Nevím' },
-  };
-
   function goTo(n) {
     document.getElementById('step0').style.display = 'none';
+    document.getElementById('loadingScreen').style.display = 'none';
     document.querySelectorAll('.step-card').forEach(el => el.classList.remove('active'));
+    closeAddrList();
     if (n >= 1 && n <= STEPS) {
       document.getElementById('step' + n).classList.add('active');
       const pct = (n / STEPS) * 100;
@@ -985,95 +1026,126 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function pick(qid, tile, nextStep, auto) {
+  function pick(qid, tile, nextStep) {
     document.getElementById(qid).querySelectorAll('.tile').forEach(t => t.classList.remove('sel'));
     tile.classList.add('sel');
     ans[qid] = tile.dataset.v;
     const num = qid.replace('q','');
     const btn = document.getElementById('nx' + num);
     if (btn) btn.disabled = false;
-    if (auto && nextStep) setTimeout(() => goTo(nextStep), 220);
   }
 
-  function tog(qid) {
-    ans[qid] = [...document.getElementById(qid).querySelectorAll('input[type="checkbox"]:checked')]
-      .map(cb => cb.closest('.cb-label').querySelector('.cb-text').textContent.trim());
+  function tog(qid, tile) {
+    tile.classList.toggle('sel');
+    ans[qid] = [...document.getElementById(qid).querySelectorAll('.m-tile.sel')]
+      .map(t => t.querySelector('.m-lbl').textContent.trim());
   }
 
-  function chkAddr() {
-    const v = document.getElementById('address').value.trim();
-    ans.address = v;
-    document.getElementById('nx9').disabled = v.length < 2;
+  // ── Address autocomplete (Nominatim) ────────────────────────────────────────
+  let addrTimer;
+  function handleAddrInput() {
+    const val = document.getElementById('address').value.trim();
+    ans.address = val;
+    document.getElementById('nx9').disabled = val.length < 2;
+    clearTimeout(addrTimer);
+    if (val.length < 3) { closeAddrList(); return; }
+    addrTimer = setTimeout(() => fetchAddr(val), 380);
+  }
+  async function fetchAddr(q) {
+    try {
+      const r = await fetch(
+        'https://nominatim.openstreetmap.org/search?q=' + encodeURIComponent(q) +
+        '&countrycodes=cz&format=json&limit=5&accept-language=cs',
+        { headers: { 'User-Agent': 'rychlyvykuppodilu.cz/1.0' } }
+      );
+      const d = await r.json();
+      const list = document.getElementById('addrList');
+      if (!d.length) { list.style.display = 'none'; return; }
+      list.innerHTML = d.map(i => {
+        const parts = i.display_name.split(',');
+        const main = parts[0].trim();
+        const rest = parts.slice(1, 3).join(', ').trim();
+        const safe = i.display_name.replace(/\/g,'\\').replace(/'/g,"\'");
+        return '<div class="addr-opt" onclick="pickAddr('' + safe + '')">'
+             + '<strong>' + main + '</strong>'
+             + (rest ? ', ' + rest : '') + '</div>';
+      }).join('');
+      list.style.display = 'block';
+    } catch(e) {}
+  }
+  function pickAddr(val) {
+    document.getElementById('address').value = val;
+    ans.address = val;
+    document.getElementById('nx9').disabled = false;
+    closeAddrList();
+  }
+  function closeAddrList() {
+    const el = document.getElementById('addrList');
+    if (el) el.style.display = 'none';
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('#addrList') && e.target.id !== 'address') closeAddrList();
+  });
+
+  // ── Phone step ──────────────────────────────────────────────────────────────
+  function chkPhone() {
+    const v = document.getElementById('phone').value.trim();
+    ans.phone = v;
+    document.getElementById('nx10').disabled = v.replace(/\D/g,'').length < 9;
   }
 
-  function showResult() {
-    ans.address = document.getElementById('address').value.trim();
-    document.querySelectorAll('.step-card').forEach(el => el.classList.remove('active'));
-    document.getElementById('progressWrap').style.display = 'none';
+  const WEBHOOK_URL = 'https://hook.eu2.make.com/9pa5o96hli9unbfbol59zqanmxsk3rfr';
 
-    const chips = [];
-    ['q1','q2','q3','q5','q6','q7','q8'].forEach(k => { if (ans[k] && CL[k]) chips.push(CL[k][ans[k]]); });
-    if (ans.q4 && ans.q4.length) ans.q4.forEach(i => chips.push('✓ ' + i));
-    if (ans.address) chips.push('📍 ' + ans.address);
-
-    document.getElementById('resultChips').innerHTML = chips.map(c => `<div class="chip">${c}</div>`).join('');
-    document.getElementById('stepResult').classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function submitForm() {
+  function submitAndLoad() {
     const phoneEl = document.getElementById('phone');
     const phone = phoneEl.value.trim();
     if (phone.replace(/\D/g,'').length < 9) {
-      phoneEl.style.borderColor = '#DC2626';
-      phoneEl.focus();
-      return;
+      phoneEl.style.borderColor = '#DC2626'; phoneEl.focus(); return;
     }
     phoneEl.style.borderColor = '';
+    ans.phone = phone;
 
+    // hide step10, show loading
+    document.getElementById('step10').classList.remove('active');
+    document.getElementById('progressWrap').style.display = 'none';
+    const ls = document.getElementById('loadingScreen');
+    ls.style.display = 'flex';
+    ls.style.flexDirection = 'column';
+
+    // send webhook
     const p = new URLSearchParams(window.location.search);
-    const payload = {
-      // ─── Identifikace zdroje ───────────────────────
-      source:          'rychlyvykuppodilu.cz',
-      form_type:       'kalkul_podil',
-      // ─── Kontakt ──────────────────────────────────
-      phone,
-      // ─── Odpovědi z dotazníku ─────────────────────
-      typ_nemovitosti: ans.q1   || null,
-      podil:           ans.q2   || null,
-      rozloha:         ans.q3   || null,
-      prislusenstvi:   ans.q4   || [],
-      stav:            ans.q5   || null,
-      obsazenost:      ans.q6   || null,
-      rychlost:        ans.q7   || null,
-      zatizeni:        ans.q8   || null,
-      adresa:          ans.address || null,
-      // ─── UTM tracking ─────────────────────────────
-      utm_source:      p.get('utm_source'),
-      utm_medium:      p.get('utm_medium'),
-      utm_campaign:    p.get('utm_campaign'),
-      utm_content:     p.get('utm_content'),
-      utm_term:        p.get('utm_term'),
-    };
-
-    // ─────────────────────────────────────────────────────────────────────
-    // WEBHOOK: nahraďte URL níže vaším Make webhook URL pro toto scenario
-    // Make → New scenario → Webhooks → Custom webhook → zkopírovat URL
-    // ─────────────────────────────────────────────────────────────────────
-    const WEBHOOK_URL = 'https://hook.eu2.make.com/9pa5o96hli9unbfbol59zqanmxsk3rfr';
-
     fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-    .then(() => showThanks())
-    .catch(() => showThanks()); // zobrazit poděkování i při chybě sítě
+      body: JSON.stringify({
+        source: 'rychlyvykuppodilu.cz', form_type: 'kalkul_podil',
+        phone: ans.phone,
+        typ_nemovitosti: ans.q1||null, podil: ans.q2||null,
+        rozloha: ans.q3||null, prislusenstvi: ans.q4||[],
+        stav: ans.q5||null, obsazenost: ans.q6||null,
+        rychlost: ans.q7||null, zatizeni: ans.q8||null,
+        adresa: ans.address||null,
+        utm_source: p.get('utm_source'), utm_medium: p.get('utm_medium'),
+        utm_campaign: p.get('utm_campaign'), utm_content: p.get('utm_content'),
+        utm_term: p.get('utm_term'),
+      })
+    }).catch(() => {});
+
+    setTimeout(() => {
+      ls.style.display = 'none';
+      showResult();
+    }, 2600);
   }
 
-  function showThanks() {
-    document.getElementById('stepResult').classList.remove('active');
-    document.getElementById('thankyou').classList.add('show');
+  function showResult() {
+    document.querySelectorAll('.step-card').forEach(el => el.classList.remove('active'));
+    document.getElementById('progressWrap').style.display = 'none';
+    const chips = [];
+    ['q1','q2','q3','q5','q6','q7','q8'].forEach(k => { if (ans[k] && CL[k]) chips.push(CL[k][ans[k]]); });
+    if (ans.q4 && ans.q4.length) ans.q4.forEach(i => chips.push('+ ' + i));
+    if (ans.address) chips.push(ans.address.split(',')[0]);
+    document.getElementById('resultChips').innerHTML = chips.map(c => '<div class="chip">' + c + '</div>').join('');
+    document.getElementById('stepResult').classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
