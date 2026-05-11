@@ -37,6 +37,7 @@
     min-height: 100vh;
     line-height: 1.6;
     font-size: 16px;
+    overflow-x: hidden;
   }
 
   /* ── NAV ── */
@@ -366,8 +367,9 @@
   .f-group label { font-size: 13px; font-weight: 600; color: var(--navy); }
   .f-group input {
     padding: 14px 18px; border: 2px solid var(--gray-mid); border-radius: var(--radius-sm);
-    font-size: 15px; color: var(--navy); background: var(--white);
+    font-size: 16px; color: var(--navy); background: var(--white);
     font-family: inherit; outline: none; transition: border-color .2s; width: 100%;
+    box-sizing: border-box;
   }
   .f-group input:focus { border-color: var(--green); }
   .f-group input::placeholder { color: #aab5b0; }
@@ -942,10 +944,10 @@
     <p class="step-hint">Do 24 hodin obdržíte ocenění vaší nemovitosti. Žádné závazky.</p>
     <div class="f-group">
       <label for="phone">Telefonní číslo</label>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span style="font-weight:700;color:var(--navy);white-space:nowrap;font-size:15px;">+420</span>
+      <div style="display:flex;align-items:center;gap:8px;width:100%;box-sizing:border-box;">
+        <span style="font-weight:700;color:var(--navy);white-space:nowrap;font-size:16px;">+420</span>
         <input type="tel" id="phone" placeholder="777 123 456"
-               oninput="chkPhone()" autocomplete="tel" style="flex:1;" />
+               oninput="chkPhone()" autocomplete="tel" style="flex:1;min-width:0;" />
       </div>
     </div>
     <div class="sf">
